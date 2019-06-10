@@ -1,0 +1,10 @@
+<input type="text" [(ngModel)]="item">
+
+<div *ngIf="items">
+
+  <ul>
+    <li *ngFor="let item of (items | async).items">
+      <h2>{{ item.name }}</h2>
+    </li>
+  </ul>
+</div>
