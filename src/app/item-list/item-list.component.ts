@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Item } from '../models/item.model';
-import { ItemService } from './item-service.service';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import * as ItemListActions from './store/item.actions';
 
 @Component({
   selector: 'app-item-list',
@@ -11,17 +11,20 @@ import { Observable } from 'rxjs';
 })
 export class ItemListComponent implements OnInit {
   items: Observable<{ items: Item[] }>;
-  item: Item;
+  name: any;
 
-  constructor(
-    private itemService: ItemService,
-    private store: Store<{ itemList: { items: Item[] } }>
-  ) {}
+  constructor(private store: Store<{ itemList: { items: Item[] } }>) {}
 
   ngOnInit() {
     this.items = this.store.select('itemList');
-    setTimeout(() => {
-      console.log(this.items);
-    }, 1000);
+  }
+
+  addItem() {
+    console.log(this.name);
+    const test = new ItemListActions.AddItem({ id: 1, name: this.name });
+    console.log(test);
+    this.store.dispatch(
+      new ItemListActions.AddItem({id: 123, name: this.name })
+    );
   }
 }
